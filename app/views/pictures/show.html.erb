@@ -12,25 +12,17 @@
       <p class="picture-show-body"><%=@picture.body%></p>
     </div>
     <h1><%=@picture.price%>€</h1>
-    <div class="picture-show-main-right-options">
-      <div class="picture-show-main-right-format">
-        <select id="pictures-qty" name="pictures-qty">
-        <option value=1>1</option>
-        <option value=2>2</option>
-        <option value=3>3</option>
-        <option value=4>4</option>
-        <option value=5>5</option>
-        <option value=6>6</option>
-        <option value=7>7</option>
-        <option value=8>8</option>
-        <option value=9>9</option>
-        </select>
-      </div>
       <br>
       <% if user_signed_in? %>
-      <%= button_to "Ajouter à mon panier", {:controller => "cards", :action => 'create', :id => @picture.id}, :method => :post, class: "btn btn-success" %>
+        <div>
+        <%= form_with model: Card.new, local: true do |f|%>
+        <%= f.hidden_field :picture_id, :value => @picture.id %>
+        <%= f.number_field :quantity, :value => 1, :min => 1%>
+        <%= f.submit "Ajouter au panier ",class: 'btn btn-outline-success' %>
+        <% end %>
+        </div>
       <% else %>
-      <%= button_to "Ajouter à mon panier", new_user_session_path, class: "btn btn btn-success" %>
+        <%= button_to "Ajouter à mon panier", new_user_session_path, class: "btn btn btn-success" %>
       <% end %>
       <p id="picture-sold" style="font-size: 12px ; padding-top: 2px"><%=@picture_sold_count%> fois déjà achetée!</p>
       <br>
