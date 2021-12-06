@@ -20,7 +20,11 @@
                             <td><img class="thumbnail ml-5 rounded-circle" src="<%= card.picture.image_url%>"></td>
                             <td> <%= card.picture.price %>€</td>
                             <td> <%= card.quantity * card.picture.price %>€</td>
-                            <td> <%= link_to "Supprimer", card_path(card.id), :method => :delete, :data => {:confirm => 'Veux-tu vraiment supprimer cet article ?'}, :class => "btn btn-outline-danger btn-l" %></td>
+                            <td><%= form_with model: @card, url: card_path(card), method: :patch, local: true do |f|%>
+                            <%= f.number_field :quantity, :value => card.quantity, :min => 1, class: "sm"%>
+                            <br><%= f.submit "Modifier mon panier ",class: 'btn btn-outline-success' %>
+                            <% end %>
+                            <%= link_to "Supprimer", card_path(card.id), :method => :delete, :data => {:confirm => 'Veux-tu vraiment supprimer cet article ?'}, :class => "btn btn-outline-danger btn-l" %></td>
                         </tr>
                             <% end %>
                     </tbody>

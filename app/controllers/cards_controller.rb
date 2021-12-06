@@ -23,6 +23,19 @@ class CardsController < ApplicationController
     session[:amount] = total_price
   end
 
+  def edit
+    @card = Card.find(params[:id])
+  end
+
+  def update
+    @card = Card.find(params[:id])
+    if @card.update(quantity: params[:quantity])
+      redirect_to cards_path
+    else
+      redirect_to cards_path
+    end
+  end
+
   def destroy
     @destroy_card = Card.find(params[:id])
     @destroy_card.destroy
